@@ -5,6 +5,7 @@ export default function App() {
   const [todos, setTodos] = useState<any[]>([]);
 
   function addTodo() {
+    if (!text.trim()) return;
     const now = new Date();
     const createdAt = now.toLocaleString("en-US", {
       timeZone: "America/New_York",
