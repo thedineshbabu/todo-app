@@ -48,6 +48,16 @@ export default function App() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="What needs doing?"
+          style={{
+            border: "2px solid #6366f1",
+            borderRadius: "8px",
+            padding: "8px 14px",
+            fontSize: "0.95rem",
+            outline: "none",
+            boxShadow: "0 2px 8px rgba(99,102,241,0.15)",
+            transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+            width: "260px",
+          }}
         />
         <button
           type="button"
