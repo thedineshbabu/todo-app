@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function App() {
   const [text, setText] = useState("");
   const [addHovered, setAddHovered] = useState(false);
+  const [clearHovered, setClearHovered] = useState(false);
   const [todos, setTodos] = useState<any[]>([]);
 
   function addTodo() {
@@ -73,6 +74,32 @@ export default function App() {
           }}
         >
           + Add
+        </button>
+        <button
+          type="button"
+          onClick={() => setText("")}
+          onMouseEnter={() => setClearHovered(true)}
+          onMouseLeave={() => setClearHovered(false)}
+          style={{
+            background: clearHovered
+              ? "linear-gradient(135deg, #b91c1c, #dc2626)"
+              : "linear-gradient(135deg, #ef4444, #f87171)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            padding: "8px 20px",
+            fontWeight: 600,
+            fontSize: "0.95rem",
+            cursor: "pointer",
+            boxShadow: clearHovered
+              ? "0 4px 14px rgba(239,68,68,0.6)"
+              : "0 2px 8px rgba(239,68,68,0.35)",
+            transform: clearHovered ? "translateY(-1px)" : "translateY(0)",
+            transition: "all 0.2s ease",
+            marginLeft: "8px",
+          }}
+        >
+          Clear
         </button>
       </div>
       <ul>
