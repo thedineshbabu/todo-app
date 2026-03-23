@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function App() {
   const [text, setText] = useState("");
+  const [addHovered, setAddHovered] = useState(false);
   const [todos, setTodos] = useState<any[]>([]);
 
   function addTodo() {
@@ -47,8 +48,31 @@ export default function App() {
           onChange={(e) => setText(e.target.value)}
           placeholder="What needs doing?"
         />
-        <button type="button" onClick={addTodo}>
-          Add
+        <button
+          type="button"
+          onClick={addTodo}
+          onMouseEnter={() => setAddHovered(true)}
+          onMouseLeave={() => setAddHovered(false)}
+          style={{
+            background: addHovered
+              ? "linear-gradient(135deg, #4f46e5, #7c3aed)"
+              : "linear-gradient(135deg, #6366f1, #8b5cf6)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            padding: "8px 20px",
+            fontWeight: 600,
+            fontSize: "0.95rem",
+            cursor: "pointer",
+            boxShadow: addHovered
+              ? "0 4px 14px rgba(99,102,241,0.6)"
+              : "0 2px 8px rgba(99,102,241,0.35)",
+            transform: addHovered ? "translateY(-1px)" : "translateY(0)",
+            transition: "all 0.2s ease",
+            marginLeft: "8px",
+          }}
+        >
+          + Add
         </button>
       </div>
       <ul>
