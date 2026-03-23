@@ -5,10 +5,21 @@ export default function App() {
   const [todos, setTodos] = useState<any[]>([]);
 
   function addTodo() {
+    const now = new Date();
+    const createdAt = now.toLocaleString("en-US", {
+      timeZone: "America/New_York",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    }) + " EST";
     const item = {
       id: Date.now(),
       text,
       completed: false,
+      createdAt,
     };
     setTodos((prev) => [...prev, item]);
     setText("");
@@ -41,7 +52,7 @@ export default function App() {
       </div>
       <ul>
         {todos.map((todo: any) => (
-          <li>
+          <li key={todo.id}>
             <label>
               <input
                 type="checkbox"
@@ -50,6 +61,9 @@ export default function App() {
               />
               {todo.text}
             </label>
+            <span style={{ fontSize: "0.8em", color: "#888", marginLeft: "8px" }}>
+              {todo.createdAt}
+            </span>
             <button type="button" onClick={() => deleteTodo(todo.id)}>
               Delete
             </button>
