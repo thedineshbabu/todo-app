@@ -66,6 +66,10 @@ export default function App() {
   return (
     <div className="container">
       <h1>Todo App</h1>
+      <div style={{ textAlign: "center", marginBottom: "16px", color: "#6366f1" }}>
+        <div style={{ fontSize: "1.8rem", fontWeight: 700, letterSpacing: "0.05em" }}>{clockTime}</div>
+        <div style={{ fontSize: "0.9rem", color: "#6b7280" }}>{clockDate}</div>
+      </div>
       <div className="input-row">
         <input
           type="text"
