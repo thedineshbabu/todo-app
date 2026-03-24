@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import "./App.css";
 
 export default function App() {
   const [text, setText] = useState("");
   const [addHovered, setAddHovered] = useState(false);
   const [clearHovered, setClearHovered] = useState(false);
+  const [deleteHoveredId, setDeleteHoveredId] = useState<number | null>(null);
   const [todos, setTodos] = useState<any[]>([]);
   const [now, setNow] = useState(new Date());
 
@@ -62,21 +64,15 @@ export default function App() {
   const remaining = todos.filter((t) => !t.completed).length;
 
   return (
-    <div>
+    <div className="container">
       <h1>Todo App</h1>
-      <div style={{ textAlign: "center", margin: "16px 0 24px" }}>
-        <div style={{ fontSize: "3rem", fontWeight: 700, letterSpacing: "0.05em", fontVariantNumeric: "tabular-nums" }}>
-          {clockTime}
-        </div>
-        <div style={{ fontSize: "1rem", color: "#888", marginTop: "4px" }}>
-          {clockDate}
-        </div>
-      </div>
-      <div>
+      <div className="input-row">
         <input
+          type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="What needs doing?"
+          onKeyDown={(e) => e.key === "Enter" && addTodo()}
         />
         <button
           type="button"
@@ -99,7 +95,6 @@ export default function App() {
               : "0 2px 8px rgba(99,102,241,0.35)",
             transform: addHovered ? "translateY(-1px)" : "translateY(0)",
             transition: "all 0.2s ease",
-            marginLeft: "8px",
           }}
         >
           + Add
@@ -133,7 +128,7 @@ export default function App() {
       </div>
       <ul>
         {todos.map((todo: any) => (
-          <li key={todo.id}>
+          <li key={todo.id} className={todo.completed ? "completed" : ""}>
             <label>
               <input
                 type="checkbox"
@@ -142,16 +137,14 @@ export default function App() {
               />
               {todo.text}
             </label>
-            <span style={{ fontSize: "0.8em", color: "#888", marginLeft: "8px" }}>
-              {todo.createdAt}
-            </span>
-            <button type="button" onClick={() => deleteTodo(todo.id)}>
+            <span className="timestamp">{todo.createdAt}</span>
+            <button type="button" className="delete-btn" onClick={() => deleteTodo(todo.id)}>
               Delete
             </button>
           </li>
         ))}
       </ul>
-      <p>{remaining} remaining</p>
+      <p className="remaining">{remaining} remaining</p>
     </div>
   );
 }
