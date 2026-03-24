@@ -1,10 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
   const [text, setText] = useState("");
   const [addHovered, setAddHovered] = useState(false);
   const [clearHovered, setClearHovered] = useState(false);
   const [todos, setTodos] = useState<any[]>([]);
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const clockTime = now.toLocaleTimeString("en-US", {
+    timeZone: "America/New_York",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+  const clockDate = now.toLocaleDateString("en-US", {
+    timeZone: "America/New_York",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 
   function addTodo() {
     if (!text.trim()) return;
@@ -43,6 +64,14 @@ export default function App() {
   return (
     <div>
       <h1>Todo App</h1>
+      <div style={{ textAlign: "center", margin: "16px 0 24px" }}>
+        <div style={{ fontSize: "3rem", fontWeight: 700, letterSpacing: "0.05em", fontVariantNumeric: "tabular-nums" }}>
+          {clockTime}
+        </div>
+        <div style={{ fontSize: "1rem", color: "#888", marginTop: "4px" }}>
+          {clockDate}
+        </div>
+      </div>
       <div>
         <input
           value={text}
