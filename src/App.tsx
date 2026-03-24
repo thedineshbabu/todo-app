@@ -7,6 +7,27 @@ export default function App() {
   const [clearHovered, setClearHovered] = useState(false);
   const [deleteHoveredId, setDeleteHoveredId] = useState<number | null>(null);
   const [todos, setTodos] = useState<any[]>([]);
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const clockTime = now.toLocaleTimeString("en-US", {
+    timeZone: "America/New_York",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+  const clockDate = now.toLocaleDateString("en-US", {
+    timeZone: "America/New_York",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 
   function addTodo() {
     if (!text.trim()) return;
