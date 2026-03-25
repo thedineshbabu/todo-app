@@ -5,9 +5,12 @@ export default function App() {
   const [text, setText] = useState("");
   const [addHovered, setAddHovered] = useState(false);
   const [clearHovered, setClearHovered] = useState(false);
-  const [deleteHoveredId, setDeleteHoveredId] = useState<number | null>(null);
-  const [todos, setTodos] = useState<any[]>([]);
+const [todos, setTodos] = useState<any[]>([]);
   const [now, setNow] = useState(new Date());
+  const [numA, setNumA] = useState("");
+  const [numB, setNumB] = useState("");
+  const [additionResult, setAdditionResult] = useState<number | null>(null);
+  const [calcHovered, setCalcHovered] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000);
@@ -59,6 +62,13 @@ export default function App() {
 
   function deleteTodo(id: number) {
     setTodos((prev) => prev.filter((t) => t.id !== id));
+  }
+
+  function calculateSum() {
+    const a = parseFloat(numA);
+    const b = parseFloat(numB);
+    if (isNaN(a) || isNaN(b)) return;
+    setAdditionResult(a + b);
   }
 
   const remaining = todos.filter((t) => !t.completed).length;
@@ -149,6 +159,94 @@ export default function App() {
         ))}
       </ul>
       <p className="remaining">{remaining} remaining</p>
+
+      <div style={{
+        marginTop: "32px",
+        background: "linear-gradient(135deg, #f0fdf4, #dcfce7)",
+        borderRadius: "12px",
+        padding: "24px",
+        boxShadow: "0 2px 12px rgba(34,197,94,0.1)",
+      }}>
+        <h2 style={{ margin: "0 0 16px", fontSize: "1.1rem", fontWeight: 700, color: "#15803d" }}>
+          ➕ Addition Calculator
+        </h2>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+          <input
+            type="number"
+            value={numA}
+            onChange={(e) => { setNumA(e.target.value); setAdditionResult(null); }}
+            placeholder="First number"
+            style={{
+              flex: 1,
+              minWidth: "120px",
+              padding: "8px 12px",
+              borderRadius: "8px",
+              border: "2px solid #86efac",
+              fontSize: "1rem",
+              outline: "none",
+              background: "#fff",
+            }}
+          />
+          <span style={{ fontWeight: 700, fontSize: "1.3rem", color: "#15803d" }}>+</span>
+          <input
+            type="number"
+            value={numB}
+            onChange={(e) => { setNumB(e.target.value); setAdditionResult(null); }}
+            placeholder="Second number"
+            onKeyDown={(e) => e.key === "Enter" && calculateSum()}
+            style={{
+              flex: 1,
+              minWidth: "120px",
+              padding: "8px 12px",
+              borderRadius: "8px",
+              border: "2px solid #86efac",
+              fontSize: "1rem",
+              outline: "none",
+              background: "#fff",
+            }}
+          />
+          <button
+            type="button"
+            onClick={calculateSum}
+            onMouseEnter={() => setCalcHovered(true)}
+            onMouseLeave={() => setCalcHovered(false)}
+            style={{
+              background: calcHovered
+                ? "linear-gradient(135deg, #15803d, #16a34a)"
+                : "linear-gradient(135deg, #22c55e, #16a34a)",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              padding: "8px 20px",
+              fontWeight: 600,
+              fontSize: "0.95rem",
+              cursor: "pointer",
+              boxShadow: calcHovered
+                ? "0 4px 14px rgba(34,197,94,0.6)"
+                : "0 2px 8px rgba(34,197,94,0.35)",
+              transform: calcHovered ? "translateY(-1px)" : "translateY(0)",
+              transition: "all 0.2s ease",
+            }}
+          >
+            = Submit
+          </button>
+        </div>
+        {additionResult !== null && (
+          <div style={{
+            marginTop: "16px",
+            padding: "12px 16px",
+            background: "#fff",
+            borderRadius: "8px",
+            border: "2px solid #22c55e",
+            fontSize: "1.1rem",
+            fontWeight: 700,
+            color: "#15803d",
+            textAlign: "center",
+          }}>
+            Result: {numA} + {numB} = <span style={{ fontSize: "1.4rem" }}>{additionResult}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
