@@ -7,6 +7,7 @@ export default function App() {
   const [clearHovered, setClearHovered] = useState(false);
   const [deleteHoveredId, setDeleteHoveredId] = useState<number | null>(null);
   const [todos, setTodos] = useState<any[]>([]);
+  const [newIds, setNewIds] = useState<Set<number>>(new Set());
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {
@@ -49,6 +50,14 @@ export default function App() {
     };
     setTodos((prev) => [...prev, item]);
     setText("");
+    setNewIds((prev) => new Set(prev).add(item.id));
+    setTimeout(() => {
+      setNewIds((prev) => {
+        const next = new Set(prev);
+        next.delete(item.id);
+        return next;
+      });
+    }, 400);
   }
 
   function toggleTodo(id: number) {
@@ -66,9 +75,9 @@ export default function App() {
   return (
     <div className="container">
       <h1>Todo App</h1>
-      <div style={{ textAlign: "center", marginBottom: "16px", color: "#6366f1" }}>
-        <div style={{ fontSize: "1.8rem", fontWeight: 700, letterSpacing: "0.05em" }}>{clockTime}</div>
-        <div style={{ fontSize: "0.9rem", color: "#6b7280" }}>{clockDate}</div>
+      <div className="clock-container">
+        <div className="clock-time">{clockTime}</div>
+        <div className="clock-date">{clockDate}</div>
       </div>
       <div className="input-row">
         <input
@@ -132,7 +141,15 @@ export default function App() {
       </div>
       <ul>
         {todos.map((todo: any) => (
-          <li key={todo.id} className={todo.completed ? "completed" : ""}>
+          <li
+            key={todo.id}
+            className={[
+              todo.completed ? "completed" : "",
+              newIds.has(todo.id) ? "todo-enter" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
             <label>
               <input
                 type="checkbox"
@@ -148,7 +165,7 @@ export default function App() {
           </li>
         ))}
       </ul>
-      <p className="remaining">{remaining} remaining</p>
+      <p className="remaining" key={remaining}>{remaining} remaining</p>
     </div>
   );
 }
