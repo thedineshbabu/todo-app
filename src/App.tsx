@@ -5,7 +5,6 @@ export default function App() {
   const [text, setText] = useState("");
   const [addHovered, setAddHovered] = useState(false);
   const [clearHovered, setClearHovered] = useState(false);
-  const [deleteHoveredId, setDeleteHoveredId] = useState<number | null>(null);
   const [todos, setTodos] = useState<any[]>([]);
   const [now, setNow] = useState(new Date());
 
