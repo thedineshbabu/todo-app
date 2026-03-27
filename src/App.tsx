@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { colors, spacing, radii, shadows, typography } from "./styles/tokens";
 
 export default function App() {
   const [text, setText] = useState("");
   const [addHovered, setAddHovered] = useState(false);
   const [clearHovered, setClearHovered] = useState(false);
-  const [deleteHoveredId, setDeleteHoveredId] = useState<number | null>(null);
   const [todos, setTodos] = useState<any[]>([]);
   const [newIds, setNewIds] = useState<Set<number>>(new Set());
   const [now, setNow] = useState(new Date());
@@ -73,19 +73,65 @@ export default function App() {
   const remaining = todos.filter((t) => !t.completed).length;
 
   return (
-    <div className="container">
-      <h1>Todo App</h1>
+    <div
+      style={{
+        maxWidth: "560px",
+        margin: `${spacing.xxxl} auto`,
+        background: colors.surfaceContainerLowest,
+        borderRadius: radii.lg,
+        padding: spacing.xxl,
+        boxShadow: shadows.card,
+        fontFamily: typography.fontFamily,
+      }}
+    >
+      <h1
+        style={{
+          fontSize: typography.sizeLg,
+          fontWeight: typography.weightBold,
+          marginBottom: spacing.xl,
+          color: colors.primary,
+          letterSpacing: "-0.02em",
+        }}
+      >
+        Todo App
+      </h1>
       <div className="clock-container">
         <div className="clock-time">{clockTime}</div>
         <div className="clock-date">{clockDate}</div>
       </div>
-      <div className="input-row">
+      <div
+        style={{
+          display: "flex",
+          gap: spacing.sm,
+          marginBottom: spacing.xl,
+        }}
+      >
         <input
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="What needs doing?"
           onKeyDown={(e) => e.key === "Enter" && addTodo()}
+          style={{
+            flex: 1,
+            padding: `${spacing.sm} ${spacing.md}`,
+            fontSize: typography.sizeBase,
+            border: `1px solid ${colors.border}`,
+            borderRadius: radii.md,
+            outline: "none",
+            background: colors.surfaceContainerLowest,
+            color: colors.onSurface,
+            fontFamily: typography.fontFamily,
+            transition: "border-color 0.2s, box-shadow 0.2s",
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = colors.primaryHover;
+            e.currentTarget.style.boxShadow = shadows.inputFocus;
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = colors.border;
+            e.currentTarget.style.boxShadow = "none";
+          }}
         />
         <button
           type="button"
@@ -93,19 +139,16 @@ export default function App() {
           onMouseEnter={() => setAddHovered(true)}
           onMouseLeave={() => setAddHovered(false)}
           style={{
-            background: addHovered
-              ? "linear-gradient(135deg, #15803d, #16a34a)"
-              : "linear-gradient(135deg, #22c55e, #16a34a)",
-            color: "#fff",
+            background: addHovered ? colors.primaryHover : colors.primary,
+            color: colors.onPrimary,
             border: "none",
-            borderRadius: "8px",
-            padding: "8px 20px",
-            fontWeight: 600,
-            fontSize: "0.95rem",
+            borderRadius: radii.md,
+            padding: `${spacing.sm} 20px`,
+            fontWeight: typography.weightSemibold,
+            fontSize: typography.sizeBase,
+            fontFamily: typography.fontFamily,
             cursor: "pointer",
-            boxShadow: addHovered
-              ? "0 4px 14px rgba(34,197,94,0.6)"
-              : "0 2px 8px rgba(34,197,94,0.35)",
+            boxShadow: addHovered ? shadows.buttonHover : shadows.button,
             transform: addHovered ? "translateY(-1px)" : "translateY(0)",
             transition: "all 0.2s ease",
           }}
@@ -118,22 +161,19 @@ export default function App() {
           onMouseEnter={() => setClearHovered(true)}
           onMouseLeave={() => setClearHovered(false)}
           style={{
-            background: clearHovered
-              ? "linear-gradient(135deg, #b91c1c, #dc2626)"
-              : "linear-gradient(135deg, #ef4444, #f87171)",
-            color: "#fff",
+            background: clearHovered ? colors.dangerHover : colors.danger,
+            color: colors.onDanger,
             border: "none",
-            borderRadius: "8px",
-            padding: "8px 20px",
-            fontWeight: 600,
-            fontSize: "0.95rem",
+            borderRadius: radii.md,
+            padding: `${spacing.sm} 20px`,
+            fontWeight: typography.weightSemibold,
+            fontSize: typography.sizeBase,
+            fontFamily: typography.fontFamily,
             cursor: "pointer",
-            boxShadow: clearHovered
-              ? "0 4px 14px rgba(239,68,68,0.6)"
-              : "0 2px 8px rgba(239,68,68,0.35)",
+            boxShadow: clearHovered ? shadows.dangerButtonHover : shadows.dangerButton,
             transform: clearHovered ? "translateY(-1px)" : "translateY(0)",
             transition: "all 0.2s ease",
-            marginLeft: "8px",
+            marginLeft: spacing.sm,
           }}
         >
           Clear
@@ -165,7 +205,17 @@ export default function App() {
           </li>
         ))}
       </ul>
-      <p className="remaining" key={remaining}>{remaining} remaining</p>
+      <p
+        className="remaining"
+        key={remaining}
+        style={{
+          marginTop: spacing.lg,
+          fontSize: typography.sizeSm,
+          color: colors.onSurfaceVariant,
+        }}
+      >
+        {remaining} remaining
+      </p>
     </div>
   );
 }
