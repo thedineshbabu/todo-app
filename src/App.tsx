@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { tokens } from "./styles/tokens";
 
 export default function App() {
   const [text, setText] = useState("");
@@ -139,27 +140,105 @@ export default function App() {
           Clear
         </button>
       </div>
-      <ul>
+      <ul
+        style={{
+          listStyle: "none",
+          display: "flex",
+          flexDirection: "column",
+          gap: tokens.spacing.sm,
+          padding: 0,
+          margin: 0,
+        }}
+      >
         {todos.map((todo: any) => (
           <li
             key={todo.id}
-            className={[
-              todo.completed ? "completed" : "",
-              newIds.has(todo.id) ? "todo-enter" : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
+            className={newIds.has(todo.id) ? "todo-enter" : undefined}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: tokens.spacing.sm,
+              padding: `${tokens.spacing.sm} ${tokens.spacing.md}`,
+              background: todo.completed
+                ? tokens.color.secondaryContainer
+                : tokens.color.surfaceContainerLow,
+              borderRadius: tokens.radius.md,
+              borderLeft: `3px solid ${todo.completed ? tokens.color.secondary : tokens.color.outlineVariant}`,
+              transition: "background 0.3s ease",
+            }}
           >
-            <label>
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: tokens.spacing.sm,
+                flex: 1,
+                cursor: "pointer",
+              }}
+            >
               <input
                 type="checkbox"
                 checked={todo.completed}
                 onChange={() => toggleTodo(todo.id)}
+                style={{
+                  width: "16px",
+                  height: "16px",
+                  cursor: "pointer",
+                  accentColor: tokens.color.primary,
+                  flexShrink: 0,
+                }}
               />
-              {todo.text}
+              <span
+                style={{
+                  fontSize: tokens.font.sizeMd,
+                  color: todo.completed
+                    ? tokens.color.onSurfaceVariant
+                    : tokens.color.onSurface,
+                  textDecoration: todo.completed ? "line-through" : "none",
+                  transition: "color 0.3s ease",
+                }}
+              >
+                {todo.text}
+              </span>
             </label>
-            <span className="timestamp">{todo.createdAt}</span>
-            <button type="button" className="delete-btn" onClick={() => deleteTodo(todo.id)}>
+            <span
+              style={{
+                fontSize: tokens.font.sizeXs,
+                color: tokens.color.outline,
+                whiteSpace: "nowrap",
+                fontWeight: tokens.font.weightMedium,
+              }}
+            >
+              {todo.createdAt}
+            </span>
+            <button
+              type="button"
+              onClick={() => deleteTodo(todo.id)}
+              onMouseEnter={() => setDeleteHoveredId(todo.id)}
+              onMouseLeave={() => setDeleteHoveredId(null)}
+              style={{
+                background:
+                  deleteHoveredId === todo.id
+                    ? tokens.color.errorContainer
+                    : "transparent",
+                border: `1px solid ${
+                  deleteHoveredId === todo.id
+                    ? tokens.color.error
+                    : tokens.color.outlineVariant
+                }`,
+                borderRadius: tokens.radius.sm,
+                padding: `3px ${tokens.spacing.sm}`,
+                fontSize: tokens.font.sizeXs,
+                color:
+                  deleteHoveredId === todo.id
+                    ? tokens.color.error
+                    : tokens.color.onSurfaceVariant,
+                cursor: "pointer",
+                transition: "background 0.2s, color 0.2s, border-color 0.2s",
+                fontWeight: tokens.font.weightSemibold,
+                flexShrink: 0,
+              }}
+            >
               Delete
             </button>
           </li>

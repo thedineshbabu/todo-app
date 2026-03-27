@@ -1,0 +1,38 @@
+export const tokens = {
+  color: {
+    primary: "#003331",
+    surface: "#f8faf9",
+    surfaceContainerLow: "#f2f4f3",
+    surfaceContainerLowest: "#ffffff",
+    surfaceContainerHighest: "#e1e3e2",
+    secondaryContainer: "#cae5e0",
+    secondary: "#4a635f",
+    onSurface: "#191c1c",
+    onSurfaceVariant: "#3f4948",
+    outline: "#707978",
+    outlineVariant: "#bfc8c7",
+    error: "#ba1a1a",
+    errorContainer: "#ffdad6",
+  },
+  spacing: {
+    xs: "4px",
+    sm: "8px",
+    md: "12px",
+    lg: "16px",
+    xl: "24px",
+  },
+  radius: {
+    sm: "4px",
+    md: "8px",
+    lg: "12px",
+  },
+  font: {
+    sizeXs: "0.75rem",
+    sizeSm: "0.875rem",
+    sizeMd: "0.95rem",
+    weightRegular: 400,
+    weightMedium: 500,
+    weightSemibold: 600,
+    weightBold: 700,
+  },
+} as const;
