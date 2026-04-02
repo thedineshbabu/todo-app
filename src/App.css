@@ -195,11 +195,11 @@ li.completed label {
 }
 
 .delete-btn:hover {
-  background: #fee2e2;
-  border-color: #fca5a5;
-  color: #dc2626;
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #2563eb;
   transform: scale(1.05);
-  box-shadow: 0 2px 8px rgba(239,68,68,0.2);
+  box-shadow: 0 2px 8px rgba(59,130,246,0.2);
 }
 
 .remaining {

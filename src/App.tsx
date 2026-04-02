@@ -94,8 +94,8 @@ export default function App() {
           onMouseLeave={() => setAddHovered(false)}
           style={{
             background: addHovered
-              ? "linear-gradient(135deg, #15803d, #16a34a)"
-              : "linear-gradient(135deg, #22c55e, #16a34a)",
+              ? "linear-gradient(135deg, #1d4ed8, #2563eb)"
+              : "linear-gradient(135deg, #3b82f6, #2563eb)",
             color: "#fff",
             border: "none",
             borderRadius: "8px",
@@ -104,8 +104,8 @@ export default function App() {
             fontSize: "0.95rem",
             cursor: "pointer",
             boxShadow: addHovered
-              ? "0 4px 14px rgba(34,197,94,0.6)"
-              : "0 2px 8px rgba(34,197,94,0.35)",
+              ? "0 4px 14px rgba(59,130,246,0.6)"
+              : "0 2px 8px rgba(59,130,246,0.35)",
             transform: addHovered ? "translateY(-1px)" : "translateY(0)",
             transition: "all 0.2s ease",
           }}
